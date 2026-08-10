@@ -22,9 +22,8 @@
 ## 📷 Application Preview
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/1ebdfd58-aaab-40a6-8ae4-5f64fc734df0" width="800" alt="App Preview" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="https://github.com/user-attachments/assets/1ebdfd58-aaab-40a6-8ae4-5f64fc734df0" width="400" alt="App Preview" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   <br />
-  <sub><i>(To display your app's demo here, upload a screenshot or GIF to your repository and replace the placeholder link above!)</i></sub>
 </div>
 ---
 

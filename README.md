@@ -23,7 +23,8 @@
 
 <div align="center">
   <!-- PLACEHOLDER FOR SCREENSHOT / GIF -->
-  <img src="https://via.placeholder.com/800x450.png?text=Upload+Your+Demo+Screenshot/GIF+Here" width="800" alt="App Preview Placeholder" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <img src="<img width="588" height="739" alt="Screenshot 2026-08-10 at 3 19 44 PM" src="https://github.com/user-attachments/assets/b5822471-4f78-442f-bb73-cb15ee3ebd3e" />
+" width="800" alt="App Preview Placeholder" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
   <br />
   <sub><i>(To display your app's demo here, upload a screenshot or GIF to your repository and replace the placeholder link above!)</i></sub>
 </div>

@@ -1,103 +1,126 @@
-# 🎓 Internship Tasks & Projects
+<div align="center">
 
-Welcome to my **Internship Project Repository**! This repository hosts a curated collection of Python scripts, Streamlit web applications, and educational playbooks developed during my internship days. It progresses from core Python scripting concepts to fully-fledged interactive Streamlit dashboards and utility applications.
+  # 🎓 Internship Tasks & Projects
+  
+  [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://internship2026-zarqnvicjwecp8wadn4cuw.streamlit.app/)
+  [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+  <p align="center">
+    <b>An interactive suite of Python tasks, concepts, and web dashboards.</b>
+    <br />
+    Explore the daily tasks, tools, and fully-fledged Streamlit web applications developed during the internship.
+  </p>
+
+  <h3>
+    <a href="https://internship2026-zarqnvicjwecp8wadn4cuw.streamlit.app/">👉 View Live Web Application 👈</a>
+  </h3>
+
+  ---
+</div>
+
+## 📷 Application Preview
+
+<div align="center">
+  <!-- PLACEHOLDER FOR SCREENSHOT / GIF -->
+  <img src="https://via.placeholder.com/800x450.png?text=Upload+Your+Demo+Screenshot/GIF+Here" width="800" alt="App Preview Placeholder" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  <br />
+  <sub><i>(To display your app's demo here, upload a screenshot or GIF to your repository and replace the placeholder link above!)</i></sub>
+</div>
 
 ---
 
-## 📁 Repository Structure
+## 📁 Repository Map
 
-Here is a breakdown of the daily tasks, demonstrations, and learning materials:
+Navigate through the folders to check daily tasks and lectures:
 
 ```bash
-├── Day2/
-│   ├── Day2_Python_Properly_HinduCollegeAmritsar_Zlaark.pptx  # Python concepts guide
-│   └── extract-year.py                                         # Python script to parse dates
-├── Day3/
-│   └── Git_GitHub.pptx                                         # Git and GitHub basics playbook
-├── Day4/
-│   ├── Meet_Streamlit.pptx                                     # Streamlit fundamentals playbook
-│   └── unit-converter.py                                       # Interactive streamlit unit converter
-├── Day5/
-│   ├── Widgets_Layout.pptx                                     # Layouts & widgets guide
-│   ├── column-demo.py                                          # Multi-column layout demo
-│   ├── container-demo.py                                       # st.container demo
-│   ├── counter-broken.py                                       # State management issue demo
-│   ├── counter-fixed.py                                        # State management solution (st.session_state)
-│   ├── empty-demo.py                                           # Dynamic content placeholders (st.empty)
-│   ├── expander-demo.py                                        # Collapsible content layouts (st.expander)
-│   ├── keys-demo.py                                            # Advanced widget key referencing demo
-│   ├── sidebar-demo.py                                         # Multi-widget sidebar control panel demo
-│   └── tabs-demo.py                                            # tab-based navigation layout demo
-├── feedback-form.py                                            # Complete interactive user feedback app
-├── Project Playbook.pptx                                       # Overall project outline
-└── README.md                                                   # Project documentation
+📂 Internship_2026
+├── 📁 Day2/
+│   ├── 📝 Day2_Python_Properly_HinduCollegeAmritsar_Zlaark.pptx  # Concepts guide
+│   └── ⚙️ extract-year.py                                         # Parse year from date string
+├── 📁 Day3/
+│   └── 📝 Git_GitHub.pptx                                         # Git setup & workflow playbook
+├── 📁 Day4/
+│   ├── 📝 Meet_Streamlit.pptx                                     # Streamlit fundamentals guide
+│   └── 🔢 unit-converter.py                                       # Dynamic unit conversion app
+├── 📁 Day5/
+│   ├── 📝 Widgets_Layout.pptx                                     # UI layout design principles
+│   ├── ⚙️ column-demo.py                                          # Multi-column grid demo
+│   ├── ⚙️ container-demo.py                                       # Containerized widget layout
+│   ├── ⚙️ counter-broken.py                                       # State management challenges
+│   ├── ⚙️ counter-fixed.py                                        # State management using st.session_state
+│   ├── ⚙️ empty-demo.py                                           # Dynamic content replacement (st.empty)
+│   ├── ⚙️ expander-demo.py                                        # Collapsible interface elements
+│   ├── ⚙️ keys-demo.py                                            # Differentiating inputs using keys
+│   ├── ⚙️ sidebar-demo.py                                         # Collapsible sidebar control panel
+│   └── ⚙️ tabs-demo.py                                            # Tabbed layout navigation demo
+├── 📝 feedback-form.py                                            # Comprehensive interactive user feedback app
+├── 📝 Project Playbook.pptx                                       # Overall project scope presentation
+└── 📄 README.md                                                   # Visual project index
 ```
 
 ---
 
-## 🛠️ Detailed App Features
+## 🛠️ Main App Showcases
 
-### 1. 📝 Feedback Form (`feedback-form.py`)
-A comprehensive feedback form built with Streamlit widgets inside a structured container.
-* **Fields:** Name, Email, Gender (dropdown selection), Experience Rating (decimal slider), Feedback comment text area, and Suggestions.
-* **Features:** Built-in form validation (ensures fields are filled before submitting) and an interactive results display showing submitted feedback in real-time.
+### 📝 Interactive Feedback Form (`feedback-form.py`)
+A feedback portal configured to validate user input and display submissions in real time.
+* **Fields:** Name, Email, Gender (dropdown), Experience Rating (star rating helper), Feedback comments, and suggestions.
+* **UI Features:** Grouped container structures, form lock checks, and success/warning notification states.
 
-### 2. 🔢 Unit Converter (`Day4/unit-converter.py`)
-A multi-category measurement converter.
-* **Supported Conversions:** Length (Metres to Feet), Weight (Kilograms to Pounds), and Temperature (Celsius to Fahrenheit).
-* **UI:** Dynamic widget adjustments depending on selected conversion type.
+### 🔢 Dynamic Unit Converter (`Day4/unit-converter.py`)
+A fast-calculating unit conversion system.
+* **Categories:** Length (Metres ⇄ Feet), Weight (Kilograms ⇄ Pounds), and Temperature (Celsius ⇄ Fahrenheit).
+* **UI Features:** Responsive input controls that calculate results immediately as values change.
 
 ---
 
 ## 💻 How to Run Locally
 
-Follow these steps to set up and run any of the applications on your system:
+Get the application running on your local machine:
 
-### 1. Clone the Repository
+### 1. Clone & Navigate
 ```bash
 git clone https://github.com/divanshiplum/Internship_2026.git
 cd Internship_2026
 ```
 
-### 2. Set Up a Virtual Environment (Recommended)
-Using a virtual environment keeps your global Python installation clean:
+### 2. Set Up a Virtual Environment
+Keep your local machine's python environment isolated and clean:
 ```bash
-# Create the virtual environment
+# Create the environment
 python3 -m venv .venv
 
-# Activate it
-# On Mac/Linux:
+# Activate it (Mac/Linux)
 source .venv/bin/activate
-# On Windows:
+
+# Activate it (Windows)
 .venv\Scripts\activate
 ```
 
-### 3. Install Dependencies
-Install the required package (Streamlit):
+### 3. Install Requirements & Run
 ```bash
+# Install Streamlit library
 pip install streamlit
-```
 
-### 4. Run the Apps
-You can run any of the Streamlit apps using `streamlit run`:
-```bash
-# Run the main feedback form:
+# Start the main feedback application
 streamlit run feedback-form.py
-
-# Run the unit converter:
-streamlit run Day4/unit-converter.py
-
-# Run any layout demo (e.g., sidebar demo):
-streamlit run Day5/sidebar-demo.py
 ```
 
 ---
 
-## ☁️ Deploying to Streamlit Cloud
+## ☁️ Continuous Deployment to Streamlit Cloud
 
-To host these applications live on the web for free:
+To host these applications live for free:
 1. Log in to [Streamlit Community Cloud](https://share.streamlit.io/) with your GitHub account.
 2. Click **Create app**.
 3. Choose this repository (`Internship_2026`).
-4. Set the **Main file path** to `feedback-form.py` (or `Day4/unit-converter.py`).
+4. Set the **Main file path** to `feedback-form.py`.
 5. Click **Deploy!**
+
+---
+
+<div align="center">
+  <sub>Developed during my Python & Streamlit Internship. Powered by Python 🐍 and Streamlit 🎈.</sub>
+</div>

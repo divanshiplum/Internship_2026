@@ -26,7 +26,7 @@ if st.button("Calculate"):
 
     # Validation 1: First number
     if num1 is None:
-        st.error("⚠️ Please enter the first number.")
+        st. error("⚠️ Please enter the first number.")
 
     # Validation 2: Second number
     elif num2 is None:

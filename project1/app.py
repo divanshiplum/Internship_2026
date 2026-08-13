@@ -10,7 +10,7 @@ df = pd.read_csv("expenses.csv")
 # Sidebar
 st.sidebar.header("ADD EXPENSE")
 
-amount = st.sidebar.number_input("Amount (₹)", min_value=0)
+amount = st.sidebar.number_input("Amount (\u20B9)", min_value=0)
 category = st.sidebar.text_input("Category")
 date = st.sidebar.date_input("Date")
 note = st.sidebar.text_input("Note")

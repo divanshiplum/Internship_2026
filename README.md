@@ -53,8 +53,8 @@ Navigate through the folders to check daily tasks and lectures:
 │   ├── ⚙️ sidebar-demo.py                                         # Collapsible sidebar control panel
 │   └── ⚙️ tabs-demo.py                                            # Tabbed layout navigation demo
 ├── 📝 feedback-form.py                                            # Comprehensive interactive user feedback app
-├── 📝 calculator.py                                               # interactive calculator application for performing basic arithmetic operations and calculations.
-├── 📝 to-do-list.py                                               # task management application for adding, viewing, updating, and managing daily tasks.
+├── 📝 calculator.py                                               # interactive calculator for performing basic calculations.
+├── 📝 to-do-list.py                                               # task management application for managing daily tasks.
 ├── 📝 Project Playbook.pptx                                       # Overall project scope presentation
 └── 📄 README.md                                                   # Visual project index
 ```

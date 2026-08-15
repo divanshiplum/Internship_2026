@@ -73,6 +73,16 @@ A fast-calculating unit conversion system.
 * **Categories:** Length (Metres ⇄ Feet), Weight (Kilograms ⇄ Pounds), and Temperature (Celsius ⇄ Fahrenheit).
 * **UI Features:** Responsive input controls that calculate results immediately as values change.
 
+### 🧮 Calculator App (`calculator.py`)
+A simple arithmetic calculator for performing basic mathematical operations.
+* **Operations:** Addition, Subtraction, Multiplication, and Division.
+* **UI Features:** Interactive input handling with clear operation selection and result display.
+
+### 📝 To-Do List App (`to-do-list.py`)
+A simple task management application for organizing and tracking daily tasks.
+* **Task Management:** Add, view, update, and delete tasks.
+* **UI Features:** Interactive task input and status management for keeping track of completed and pending tasks. 
+
 ---
 
 ## 💻 How to Run Locally

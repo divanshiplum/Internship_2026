@@ -3,14 +3,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
+
+# =========================
+# PAGE CONFIG
+# =========================
+
 st.set_page_config(
     page_title="My Expense Tracker",
     page_icon="💰",
     layout="wide"
 )
 
+
+# =========================
+# CUSTOM CSS
+# =========================
+
 st.markdown("""
 <style>
+
 .stApp {
     background: linear-gradient(
         135deg,
@@ -20,6 +31,9 @@ st.markdown("""
     );
     min-height: 100vh;
 }
+
+
+/* HEADER */
 
 header[data-testid="stHeader"] {
     background: linear-gradient(
@@ -32,6 +46,9 @@ header[data-testid="stHeader"] {
 div[data-testid="stToolbar"] {
     background: transparent !important;
 }
+
+
+/* MENU */
 
 div[role="menu"] {
     background: #4a0000 !important;
@@ -95,6 +112,9 @@ div[data-testid="stMainMenu"] button:hover {
     color: white !important;
 }
 
+
+/* HEADER BUTTON */
+
 header[data-testid="stHeader"] button:hover {
     background-color: black !important;
     color: white !important;
@@ -115,8 +135,16 @@ header[data-testid="stHeader"] button:hover * {
     color: white !important;
 }
 
+
+/* MAIN TITLE */
+
 h1 {
-    background: linear-gradient(90deg, #8b0000, #c1121f) !important;
+    background: linear-gradient(
+        90deg,
+        #8b0000,
+        #c1121f
+    ) !important;
+
     color: white !important;
     text-align: center !important;
     padding: 15px !important;
@@ -124,13 +152,26 @@ h1 {
     margin-bottom: 25px !important;
 }
 
-h2, h3, h4 {
+
+/* HEADINGS */
+
+h2,
+h3,
+h4 {
     color: black !important;
     font-weight: bold !important;
 }
 
+
+/* SECTION HEADING */
+
 .expense-heading {
-    background: linear-gradient(90deg, #4a0000, #8b0000);
+    background: linear-gradient(
+        90deg,
+        #4a0000,
+        #8b0000
+    );
+
     color: white !important;
     padding: 15px;
     border-left: 8px solid #ff1e1e;
@@ -140,14 +181,31 @@ h2, h3, h4 {
     margin-bottom: 20px;
 }
 
+
+/* SIDEBAR HEADING */
+
+[data-testid="stSidebar"] .expense-heading {
+    font-size: 20px;
+    padding: 12px;
+}
+
+
+/* LABELS */
+
 label {
     color: black !important;
     font-weight: bold !important;
 }
 
+
+/* INPUT */
+
 div[data-baseweb="input"] {
     border: 1px solid black;
 }
+
+
+/* BUTTON */
 
 .stButton > button {
     background-color: red !important;
@@ -174,8 +232,16 @@ div[data-baseweb="input"] {
     color: white !important;
 }
 
+
+/* TOTAL BOX */
+
 .total-box {
-    background: linear-gradient(90deg, #4a0000, #8b0000);
+    background: linear-gradient(
+        90deg,
+        #4a0000,
+        #8b0000
+    );
+
     color: white;
     padding: 20px;
     border-left: 8px solid #ff1e1e;
@@ -196,6 +262,9 @@ div[data-baseweb="input"] {
     font-size: 20px;
 }
 
+
+/* FILTER BOX */
+
 .filter-box {
     background-color: rgba(255, 255, 255, 0.7);
     padding: 20px;
@@ -204,23 +273,83 @@ div[data-baseweb="input"] {
     margin-bottom: 25px;
 }
 
+
+/* SIDEBAR */
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #ffd6d6 60%,
+        #ffb3b3 100%
+    );
+}
+
+
+/* SIDEBAR DIVIDER */
+
+[data-testid="stSidebar"] hr {
+    border-color: #8b0000 !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
+
+
+# =========================
+# TITLE
+# =========================
 
 st.markdown(
     '<h1>MY EXPENSE TRACKER 💸</h1>',
     unsafe_allow_html=True
 )
 
+
+# =========================
+# CSV FILE
+# =========================
+
 csv_path = Path(__file__).parent / "expenses.csv"
 
-df = pd.read_csv(csv_path)
 
-required_columns = ["Date", "Category", "Note", "Amount"]
+# =========================
+# LOAD DATA
+# =========================
+
+try:
+    df = pd.read_csv(csv_path)
+except FileNotFoundError:
+    df = pd.DataFrame(
+        columns=[
+            "Date",
+            "Category",
+            "Note",
+            "Amount"
+        ]
+    )
+
+
+# =========================
+# REQUIRED COLUMNS
+# =========================
+
+required_columns = [
+    "Date",
+    "Category",
+    "Note",
+    "Amount"
+]
 
 for column in required_columns:
+
     if column not in df.columns:
         df[column] = ""
+
+
+# =========================
+# DATA CLEANING
+# =========================
 
 df["Date"] = pd.to_datetime(
     df["Date"],
@@ -232,14 +361,18 @@ df["Amount"] = pd.to_numeric(
     errors="coerce"
 ).fillna(0)
 
-st.markdown(
-    '<div class="expense-heading">Add Your Expense 👇</div>',
-    unsafe_allow_html=True
-)
 
-col1, col2 = st.columns(2)
+# =========================
+# SIDEBAR
+# ADD EXPENSE
+# =========================
 
-with col1:
+with st.sidebar:
+
+    st.markdown(
+        '<div class="expense-heading">Add Your Expense 👇</div>',
+        unsafe_allow_html=True
+    )
 
     amount = st.number_input(
         "Amount (₹)",
@@ -251,8 +384,6 @@ with col1:
         "Category"
     )
 
-with col2:
-
     date = st.date_input(
         "Date"
     )
@@ -261,41 +392,99 @@ with col2:
         "Note"
     )
 
-if st.button("ADD EXPENSE"):
-    if amount <= 0:
-        st.error("⚠️ Please enter a valid amount.")
-    elif category.strip() == "":
-        st.error("⚠️ Please enter a category.")
-    elif note.strip() == "":
-        st.error("⚠️ Please enter a note.")
-    else:
-        new_expense = {
-            "Date": date,
-            "Category": category.strip(),
-            "Note": note.strip(),
-            "Amount": amount
-        }
-        df.loc[len(df)] = new_expense
-        df.to_csv(
-            csv_path,
-            index=False
-        )
-        st.success(
-            "✅ Expense added successfully!"
-        )
-        st.rerun()
+    st.markdown("---")
+
+    if st.button("ADD EXPENSE"):
+
+        if amount <= 0:
+
+            st.error(
+                "⚠️ Please enter a valid amount."
+            )
+
+        elif category.strip() == "":
+
+            st.error(
+                "⚠️ Please enter a category."
+            )
+
+        elif note.strip() == "":
+
+            st.error(
+                "⚠️ Please enter a note."
+            )
+
+        else:
+
+            new_expense = {
+                "Date": date,
+                "Category": category.strip(),
+                "Note": note.strip(),
+                "Amount": amount
+            }
+
+            df.loc[len(df)] = new_expense
+
+            df.to_csv(
+                csv_path,
+                index=False
+            )
+
+            st.success(
+                "✅ Expense added successfully!"
+            )
+
+            st.rerun()
+
+
+# =========================
+# TOTAL SPENT
+# =========================
+
+total = df["Amount"].sum()
+
+
+st.markdown(
+    f"""
+    <div class="total-box">
+        <div class="total-label">
+            TOTAL SPENT
+        </div>
+
+        <div class="total-value">
+            ₹ {total:,.0f}
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# =========================
+# FILTER EXPENSES
+# =========================
 
 st.markdown(
     '<div class="expense-heading">Filter Expenses 🔎</div>',
     unsafe_allow_html=True
 )
 
+
+# =========================
+# FILTER ROW
+# =========================
+
 filter_col1, filter_col2, filter_col3 = st.columns(3)
 
+
+# CATEGORY FILTER
+
 with filter_col1:
+
     categories = (
         ["All"]
-        + sorted(
+        +
+        sorted(
             df["Category"]
             .dropna()
             .astype(str)
@@ -309,13 +498,21 @@ with filter_col1:
         categories
     )
 
+
+# MINIMUM AMOUNT
+
 with filter_col2:
+
     if not df.empty:
+
         maximum_amount = int(
             df["Amount"].max()
         )
+
     else:
+
         maximum_amount = 0
+
     min_amount = st.number_input(
         "Minimum Amount (₹)",
         min_value=0,
@@ -323,7 +520,11 @@ with filter_col2:
         step=10
     )
 
+
+# MAXIMUM AMOUNT
+
 with filter_col3:
+
     max_amount = st.number_input(
         "Maximum Amount (₹)",
         min_value=0,
@@ -331,59 +532,121 @@ with filter_col3:
         step=10
     )
 
-if not df.empty and df["Date"].notna().any():
-    min_date = df["Date"].dropna().min()
-    max_date = df["Date"].dropna().max()
+
+# =========================
+# DATE FILTER
+# =========================
+
+if (
+    not df.empty
+    and df["Date"].notna().any()
+):
+
+    min_date = (
+        df["Date"]
+        .dropna()
+        .min()
+    )
+
+    max_date = (
+        df["Date"]
+        .dropna()
+        .max()
+    )
+
 else:
-    min_date = pd.Timestamp.today().date()
-    max_date = pd.Timestamp.today().date()
+
+    min_date = (
+        pd.Timestamp
+        .today()
+        .date()
+    )
+
+    max_date = (
+        pd.Timestamp
+        .today()
+        .date()
+    )
+
 
 date_col1, date_col2 = st.columns(2)
 
+
 with date_col1:
+
     start_date = st.date_input(
         "From Date",
         value=min_date
     )
 
+
 with date_col2:
+
     end_date = st.date_input(
         "To Date",
         value=max_date
     )
 
+
+# =========================
+# APPLY FILTERS
+# =========================
+
 filtered_df = df.copy()
 
+
+# CATEGORY
+
 if selected_category != "All":
+
     filtered_df = filtered_df[
-        filtered_df["Category"].astype(str)
+        filtered_df["Category"]
+        .astype(str)
         == selected_category
     ]
 
+
+# AMOUNT
+
 if min_amount <= max_amount:
+
     filtered_df = filtered_df[
         (filtered_df["Amount"] >= min_amount)
         &
         (filtered_df["Amount"] <= max_amount)
     ]
+
 else:
+
     st.warning(
         "⚠️ Minimum amount cannot be greater than maximum amount."
     )
+
     filtered_df = filtered_df.iloc[0:0]
 
+
+# DATE
+
 if start_date <= end_date:
+
     filtered_df = filtered_df[
         (filtered_df["Date"] >= start_date)
         &
         (filtered_df["Date"] <= end_date)
     ]
+
 else:
+
     st.warning(
         "⚠️ From Date cannot be after To Date."
     )
 
     filtered_df = filtered_df.iloc[0:0]
+
+
+# =========================
+# SHOWING COUNT
+# =========================
 
 st.markdown(
     f"""
@@ -400,32 +663,52 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-total = filtered_df["Amount"].sum()
+
+# =========================
+# FILTERED TOTAL
+# =========================
+
+filtered_total = filtered_df["Amount"].sum()
+
 
 st.markdown(
     f"""
     <div class="total-box">
-        <div class="total-label">TOTAL SPENT</div>
+        <div class="total-label">
+            FILTERED TOTAL
+        </div>
+
         <div class="total-value">
-            ₹ {total:,.0f}
+            ₹ {filtered_total:,.0f}
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-st.subheader("Spending by Category")
+
+# =========================
+# SPENDING BY CATEGORY
+# =========================
+
+st.subheader(
+    "Spending by Category"
+)
+
 
 if not filtered_df.empty:
+
     category_total = (
         filtered_df
         .groupby("Category")["Amount"]
         .sum()
     )
 
+
     fig, ax = plt.subplots(
         figsize=(8, 4)
     )
+
 
     ax.bar(
         category_total.index,
@@ -433,29 +716,37 @@ if not filtered_df.empty:
         color="red"
     )
 
+
     ax.set_xlabel(
         "Category",
         labelpad=8
     )
 
+
     ax.set_ylabel(
         "Amount (₹)"
     )
 
+
     ax.set_title(
         "Expenses by Category"
     )
+
 
     plt.xticks(
         rotation=45,
         ha="right"
     )
 
+
     plt.tight_layout()
+
 
     st.pyplot(fig)
 
+
     plt.close(fig)
+
 
 else:
 
@@ -464,19 +755,32 @@ else:
     )
 
 
-st.subheader("Recent Expenses")
+# =========================
+# RECENT EXPENSES
+# =========================
+
+st.subheader(
+    "Recent Expenses"
+)
+
 
 if not filtered_df.empty:
-    display_df = filtered_df.sort_values(
-        by="Date",
-        ascending=False
+
+    display_df = (
+        filtered_df
+        .sort_values(
+            by="Date",
+            ascending=False
+        )
     )
+
 
     st.dataframe(
         display_df,
         use_container_width=True,
         hide_index=True
     )
+
 
 else:
 

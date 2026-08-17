@@ -3,11 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-
-# =========================================================
-# PAGE CONFIG
-# =========================================================
-
 st.set_page_config(
     page_title="My Expense Tracker",
     page_icon="💰",

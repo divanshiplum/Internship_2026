@@ -5,7 +5,8 @@ from pathlib import Path
 
 st.title("My Expense Tracker")
 
-df = pd.read_csv("expenses.csv")
+csv_path = Path(__file__).parent / "expenses.csv"
+df = pd.read_csv(csv_path)
 
 st.sidebar.header("ADD EXPENSE")
 

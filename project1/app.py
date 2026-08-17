@@ -3,19 +3,115 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pathlib import Path
 
-st.title("My Expense Tracker")
+# Page settings
+st.set_page_config(
+    page_title="My Expense Tracker",
+    page_icon="💰"
+)
 
+# CSS
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: white;
+    color: black;
+}
+
+h1 {
+    color: red;
+    text-align: center;
+}
+
+h2, h3 {
+    color: black;
+}
+
+.expense-box {
+    background-color: black;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid red;
+}
+
+.expense-title {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.stButton > button {
+    background-color: red;
+    color: white;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.total-box {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 8px solid red;
+    margin-top: 20px;
+}
+
+.total-title {
+    color: white;
+    font-size: 15px;
+}
+
+.total-amount {
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+# Title
+st.title("MY EXPENSE TRACKER")
+
+
+# CSV file
 csv_path = Path(__file__).parent / "expenses.csv"
+
 df = pd.read_csv(csv_path)
 
-st.sidebar.header("ADD EXPENSE")
 
-amount = st.sidebar.number_input("Amount (\u20B9)", min_value=0)
-category = st.sidebar.text_input("Category")
-date = st.sidebar.date_input("Date")
-note = st.sidebar.text_input("Note")
+# ---------------- ADD EXPENSE ----------------
 
-if st.sidebar.button("Add Expense"):
+st.markdown("""
+<div class="expense-box">
+    <div class="expense-title">➕ Add Expense</div>
+</div>
+""", unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+
+with col1:
+
+    amount = st.number_input(
+        "Amount (₹)",
+        min_value=0,
+        step=10
+    )
+
+    category = st.text_input("Category")
+
+
+with col2:
+
+    date = st.date_input("Date")
+
+    note = st.text_input("Note")
+
+
+# Add button
+if st.button("ADD EXPENSE"):
 
     new_expense = {
         "Date": date,
@@ -25,14 +121,27 @@ if st.sidebar.button("Add Expense"):
     }
 
     df.loc[len(df)] = new_expense
-    df.to_csv("expenses.csv", index=False)
 
-    st.success("Expense added!")
+    df.to_csv(csv_path, index=False)
+
+    st.success("Expense added successfully!")
+
+    st.rerun()
+
+
+# ---------------- TOTAL ----------------
 
 total = df["Amount"].sum()
 
-st.subheader("Total Spent")
-st.write("\u20B9", total)
+st.markdown(f"""
+<div class="total-box">
+    <div class="total-title">TOTAL SPENT</div>
+    <div class="total-amount">₹ {total:,.0f}</div>
+</div>
+""", unsafe_allow_html=True)
+
+
+# ---------------- CHART ----------------
 
 st.subheader("Spending by Category")
 
@@ -40,13 +149,21 @@ category_total = df.groupby("Category")["Amount"].sum()
 
 fig, ax = plt.subplots()
 
-ax.bar(category_total.index, category_total.values)
-
-ax.set_xlabel("Category")
-ax.set_ylabel("Amount (\u20B9)")
+ax.bar(
+    category_total.index,
+    category_total.values,
+    color="red"
+)
 
 st.pyplot(fig)
 
+
+# ---------------- RECENT EXPENSES ----------------
+
 st.subheader("Recent Expenses")
 
-st.dataframe(df)
+st.dataframe(
+    df,
+    use_container_width=True,
+    hide_index=True
+)

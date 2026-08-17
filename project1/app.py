@@ -97,7 +97,7 @@ with col1:
     st.markdown("**Amount (₹)**")
     amount = st.number_input(
         "Amount",
-        min_value=0,
+        
         step=10,
         label_visibility="collapsed"
     )

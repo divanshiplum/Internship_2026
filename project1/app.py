@@ -25,7 +25,6 @@ h1 {
 
 h2, h3 {
     color: black;
-    margin-top: 5px;
 }
 
 .expense-box {
@@ -95,9 +94,12 @@ col1, col2 = st.columns(2)
 
 with col1:
 
+    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
+
     st.markdown("**Amount (₹)**")
     amount = st.number_input(
-        "Amount",   
+        "Amount",
+        min_value=0,
         step=10,
         label_visibility="collapsed"
     )
@@ -110,6 +112,8 @@ with col1:
 
 
 with col2:
+
+    st.markdown("<div style='margin-top: 20px;'></div>", unsafe_allow_html=True)
 
     st.markdown("**Date**")
     date = st.date_input(

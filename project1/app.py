@@ -25,6 +25,7 @@ h1 {
 
 h2, h3 {
     color: black;
+    margin-top: 5px;
 }
 
 .expense-box {

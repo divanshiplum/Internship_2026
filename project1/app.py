@@ -92,10 +92,14 @@ div[data-baseweb="input"] {
 
 .total-label {
     color: white;
+    font-weight: bold;
+    font-size: 30px;
 }
 
 .total-value {
     color: #ff4d4d;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .chart-heading {

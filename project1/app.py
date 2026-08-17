@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 
-# =========================
+# =========================================================
 # PAGE CONFIG
-# =========================
+# =========================================================
 
 st.set_page_config(
     page_title="My Expense Tracker",
@@ -14,14 +14,8 @@ st.set_page_config(
     layout="wide"
 )
 
-
-# =========================
-# CUSTOM CSS
-# =========================
-
 st.markdown("""
 <style>
-
 .stApp {
     background: linear-gradient(
         135deg,
@@ -31,9 +25,6 @@ st.markdown("""
     );
     min-height: 100vh;
 }
-
-
-/* HEADER */
 
 header[data-testid="stHeader"] {
     background: linear-gradient(
@@ -47,14 +38,172 @@ div[data-testid="stToolbar"] {
     background: transparent !important;
 }
 
+h1 {
+    background: linear-gradient(
+        90deg,
+        #8b0000,
+        #c1121f
+    ) !important;
+    color: white !important;
+    text-align: center !important;
+    padding: 15px !important;
+    border-radius: 10px !important;
+    margin-bottom: 20px !important;
+}
 
-/* MENU */
+h2,h3,h4 {
+    color: black !important;
+    font-weight: bold !important;
+}
+
+.expense-heading {
+    background: linear-gradient(
+        90deg,
+        #4a0000,
+        #8b0000
+    );
+    color: white !important;
+    padding: 12px;
+    border-left: 7px solid #ff1e1e;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #ffd6d6 60%,
+        #ffb3b3 100%
+    );
+    overflow-y: hidden !important;
+}
+
+[data-testid="stSidebar"] > div:first-child {
+    padding-top: 1rem !important;
+    padding-bottom: 0rem !important;
+}
+
+[data-testid="stSidebar"] .expense-heading {
+    font-size: 19px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+[data-testid="stSidebar"] label {
+    color: black !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stWidgetLabel"] {
+    color: black !important;
+    font-weight: bold !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p {
+    color: black !important;
+    font-weight: bold !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stNumberInput"],
+[data-testid="stSidebar"] [data-testid="stTextInput"],
+[data-testid="stSidebar"] [data-testid="stDateInput"] {
+    margin-bottom: 4px !important;
+}
+
+[data-testid="stSidebar"] input {
+    min-height: 34px !important;
+}
+
+[data-testid="stSidebar"] .stButton {
+    margin-top: 8px !important;
+}
+
+[data-testid="stSidebar"] .stButton > button {
+    height: 38px !important;
+    min-height: 38px !important;
+    padding: 5px 10px !important;
+    background-color: red !important;
+    color: white !important;
+    border: 2px solid red !important;
+    border-radius: 6px !important;
+    width: 100%;
+    font-weight: bold !important;
+}
+
+[data-testid="stSidebar"] .stButton > button:hover {
+    background-color: black !important;
+    border-color: black !important;
+    color: white !important;
+}
+
+[data-testid="stSidebar"] hr {
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+    border-color: #8b0000 !important;
+}
+
+label {
+    color: black !important;
+    font-weight: bold !important;
+}
+
+div[data-baseweb="input"] {
+    border: 1px solid black;
+}
+
+.stButton > button {
+    background-color: red !important;
+    color: white !important;
+    border: 2px solid red !important;
+    border-radius: 6px !important;
+    width: 100%;
+    font-weight: bold !important;
+}
+
+.stButton > button:hover {
+    background-color: black !important;
+    color: white !important;
+    border: 2px solid black !important;
+}
+
+.stButton > button:focus {
+    background-color: black !important;
+    color: white !important;
+}
+
+div[data-testid="stMetric"] {
+    background: linear-gradient(
+        90deg,
+        #4a0000,
+        #8b0000
+    );
+    border-left: 8px solid #ff1e1e;
+    border-radius: 8px;
+    padding: 18px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+div[data-testid="stMetric"] label {
+    color: white !important;
+    font-size: 24px !important;
+    font-weight: bold !important;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #ff4d4d !important;
+    font-size: 30px !important;
+    font-weight: bold !important;
+}
 
 div[role="menu"] {
     background: #4a0000 !important;
     border: 2px solid #8b0000 !important;
     border-radius: 10px !important;
-    padding: 8px !important;
 }
 
 div[data-baseweb="popover"] {
@@ -75,45 +224,7 @@ div[role="menu"] div[role="menuitem"] * {
 
 div[role="menu"] div[role="menuitem"]:hover {
     background: #7a2020 !important;
-    color: white !important;
 }
-
-div[data-baseweb="menu"] {
-    background: #4a0000 !important;
-}
-
-div[data-baseweb="menu"] li {
-    background: #5c1111 !important;
-    color: white !important;
-}
-
-div[data-baseweb="menu"] li:hover {
-    background: #7a2020 !important;
-    color: white !important;
-}
-
-div[data-testid="stMainMenu"] {
-    background: #4a0000 !important;
-    color: white !important;
-}
-
-div[data-testid="stMainMenu"] * {
-    color: white !important;
-}
-
-div[data-testid="stMainMenu"] button {
-    background: #5c1111 !important;
-    color: white !important;
-    border-radius: 6px !important;
-}
-
-div[data-testid="stMainMenu"] button:hover {
-    background: #7a2020 !important;
-    color: white !important;
-}
-
-
-/* HEADER BUTTON */
 
 header[data-testid="stHeader"] button:hover {
     background-color: black !important;
@@ -121,205 +232,24 @@ header[data-testid="stHeader"] button:hover {
     border-radius: 6px !important;
 }
 
-header[data-testid="stHeader"] button[aria-label*="Menu"]:hover {
-    background-color: black !important;
-    color: white !important;
-}
-
-div[data-testid="stToolbar"] button:hover {
-    background-color: black !important;
-    color: white !important;
-}
-
 header[data-testid="stHeader"] button:hover * {
     color: white !important;
 }
-
-
-/* MAIN TITLE */
-
-h1 {
-    background: linear-gradient(
-        90deg,
-        #8b0000,
-        #c1121f
-    ) !important;
-
-    color: white !important;
-    text-align: center !important;
-    padding: 15px !important;
-    border-radius: 10px !important;
-    margin-bottom: 25px !important;
-}
-
-
-/* HEADINGS */
-
-h2,
-h3,
-h4 {
-    color: black !important;
-    font-weight: bold !important;
-}
-
-
-/* SECTION HEADING */
-
-.expense-heading {
-    background: linear-gradient(
-        90deg,
-        #4a0000,
-        #8b0000
-    );
-
-    color: white !important;
-    padding: 15px;
-    border-left: 8px solid #ff1e1e;
-    border-radius: 8px;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-
-/* SIDEBAR HEADING */
-
-[data-testid="stSidebar"] .expense-heading {
-    font-size: 20px;
-    padding: 12px;
-}
-
-
-/* LABELS */
-
-label {
-    color: black !important;
-    font-weight: bold !important;
-}
-
-
-/* INPUT */
-
-div[data-baseweb="input"] {
-    border: 1px solid black;
-}
-
-
-/* BUTTON */
-
-.stButton > button {
-    background-color: red !important;
-    color: white !important;
-    border: 2px solid red !important;
-    border-radius: 6px !important;
-    width: 100%;
-    font-weight: bold !important;
-}
-
-.stButton > button:hover {
-    background-color: black !important;
-    color: white !important;
-    border: 2px solid black !important;
-}
-
-.stButton > button:active {
-    background-color: black !important;
-    color: white !important;
-}
-
-.stButton > button:focus {
-    background-color: black !important;
-    color: white !important;
-}
-
-
-/* TOTAL BOX */
-
-.total-box {
-    background: linear-gradient(
-        90deg,
-        #4a0000,
-        #8b0000
-    );
-
-    color: white;
-    padding: 20px;
-    border-left: 8px solid #ff1e1e;
-    border-radius: 8px;
-    margin-top: 25px;
-    margin-bottom: 25px;
-}
-
-.total-label {
-    color: white;
-    font-weight: bold;
-    font-size: 30px;
-}
-
-.total-value {
-    color: #ff4d4d;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-
-/* FILTER BOX */
-
-.filter-box {
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 20px;
-    border-radius: 10px;
-    border: 2px solid #8b0000;
-    margin-bottom: 25px;
-}
-
-
-/* SIDEBAR */
-
-[data-testid="stSidebar"] {
-    background: linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #ffd6d6 60%,
-        #ffb3b3 100%
-    );
-}
-
-
-/* SIDEBAR DIVIDER */
-
-[data-testid="stSidebar"] hr {
-    border-color: #8b0000 !important;
-}
-
 </style>
 """, unsafe_allow_html=True)
-
-
-# =========================
-# TITLE
-# =========================
 
 st.markdown(
     '<h1>MY EXPENSE TRACKER 💸</h1>',
     unsafe_allow_html=True
 )
 
-
-# =========================
-# CSV FILE
-# =========================
-
 csv_path = Path(__file__).parent / "expenses.csv"
-
-
-# =========================
-# LOAD DATA
-# =========================
 
 try:
     df = pd.read_csv(csv_path)
+
 except FileNotFoundError:
+
     df = pd.DataFrame(
         columns=[
             "Date",
@@ -328,11 +258,6 @@ except FileNotFoundError:
             "Amount"
         ]
     )
-
-
-# =========================
-# REQUIRED COLUMNS
-# =========================
 
 required_columns = [
     "Date",
@@ -346,11 +271,6 @@ for column in required_columns:
     if column not in df.columns:
         df[column] = ""
 
-
-# =========================
-# DATA CLEANING
-# =========================
-
 df["Date"] = pd.to_datetime(
     df["Date"],
     errors="coerce"
@@ -360,12 +280,6 @@ df["Amount"] = pd.to_numeric(
     df["Amount"],
     errors="coerce"
 ).fillna(0)
-
-
-# =========================
-# SIDEBAR
-# ADD EXPENSE
-# =========================
 
 with st.sidebar:
 
@@ -377,7 +291,8 @@ with st.sidebar:
     amount = st.number_input(
         "Amount (₹)",
         min_value=0,
-        step=10
+        step=10,
+        value=0
     )
 
     category = st.text_input(
@@ -392,92 +307,71 @@ with st.sidebar:
         "Note"
     )
 
-    st.markdown("---")
+    add_expense = st.button(
+        "ADD EXPENSE"
+    )
 
-    if st.button("ADD EXPENSE"):
+if add_expense:
 
-        if amount <= 0:
+    if amount <= 0:
 
-            st.error(
-                "⚠️ Please enter a valid amount."
-            )
+        st.sidebar.error(
+            "⚠️ Please enter a valid amount."
+        )
 
-        elif category.strip() == "":
+    elif category.strip() == "":
 
-            st.error(
-                "⚠️ Please enter a category."
-            )
+        st.sidebar.error(
+            "⚠️ Please enter a category."
+        )
 
-        elif note.strip() == "":
+    elif note.strip() == "":
 
-            st.error(
-                "⚠️ Please enter a note."
-            )
+        st.sidebar.error(
+            "⚠️ Please enter a note."
+        )
 
-        else:
+    else:
 
-            new_expense = {
-                "Date": date,
-                "Category": category.strip(),
-                "Note": note.strip(),
-                "Amount": amount
-            }
+        new_expense = {
+            "Date": date,
+            "Category": category.strip(),
+            "Note": note.strip(),
+            "Amount": amount
+        }
 
-            df.loc[len(df)] = new_expense
+        df.loc[len(df)] = new_expense
 
-            df.to_csv(
-                csv_path,
-                index=False
-            )
+        df.to_csv(
+            csv_path,
+            index=False
+        )
 
-            st.success(
-                "✅ Expense added successfully!"
-            )
+        st.sidebar.success(
+            "✅ Expense added!"
+        )
 
-            st.rerun()
+        st.rerun()
 
-
-# =========================
-# TOTAL SPENT
-# =========================
-
-total = df["Amount"].sum()
-
-
-st.markdown(
-    f"""
-    <div class="total-box">
-        <div class="total-label">
-            TOTAL SPENT
-        </div>
-
-        <div class="total-value">
-            ₹ {total:,.0f}
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
+total_spent = float(
+    df["Amount"].sum()
 )
 
+st.subheader(
+    "TOTAL SPENT"
+)
 
-# =========================
-# FILTER EXPENSES
-# =========================
+st.metric(
+    label="Total amount spent",
+    value=f"₹ {total_spent:,.0f}"
+)
 
 st.markdown(
     '<div class="expense-heading">Filter Expenses 🔎</div>',
     unsafe_allow_html=True
 )
 
-
-# =========================
-# FILTER ROW
-# =========================
-
 filter_col1, filter_col2, filter_col3 = st.columns(3)
-
-
-# CATEGORY FILTER
 
 with filter_col1:
 
@@ -498,9 +392,6 @@ with filter_col1:
         categories
     )
 
-
-# MINIMUM AMOUNT
-
 with filter_col2:
 
     if not df.empty:
@@ -520,9 +411,6 @@ with filter_col2:
         step=10
     )
 
-
-# MAXIMUM AMOUNT
-
 with filter_col3:
 
     max_amount = st.number_input(
@@ -532,45 +420,23 @@ with filter_col3:
         step=10
     )
 
-
-# =========================
-# DATE FILTER
-# =========================
-
 if (
     not df.empty
     and df["Date"].notna().any()
 ):
 
-    min_date = (
-        df["Date"]
-        .dropna()
-        .min()
-    )
+    min_date = df["Date"].dropna().min()
 
-    max_date = (
-        df["Date"]
-        .dropna()
-        .max()
-    )
+    max_date = df["Date"].dropna().max()
 
 else:
 
-    min_date = (
-        pd.Timestamp
-        .today()
-        .date()
-    )
+    min_date = pd.Timestamp.today().date()
 
-    max_date = (
-        pd.Timestamp
-        .today()
-        .date()
-    )
+    max_date = pd.Timestamp.today().date()
 
 
 date_col1, date_col2 = st.columns(2)
-
 
 with date_col1:
 
@@ -579,7 +445,6 @@ with date_col1:
         value=min_date
     )
 
-
 with date_col2:
 
     end_date = st.date_input(
@@ -587,26 +452,14 @@ with date_col2:
         value=max_date
     )
 
-
-# =========================
-# APPLY FILTERS
-# =========================
-
 filtered_df = df.copy()
-
-
-# CATEGORY
 
 if selected_category != "All":
 
     filtered_df = filtered_df[
-        filtered_df["Category"]
-        .astype(str)
+        filtered_df["Category"].astype(str)
         == selected_category
     ]
-
-
-# AMOUNT
 
 if min_amount <= max_amount:
 
@@ -624,9 +477,6 @@ else:
 
     filtered_df = filtered_df.iloc[0:0]
 
-
-# DATE
-
 if start_date <= end_date:
 
     filtered_df = filtered_df[
@@ -643,11 +493,6 @@ else:
 
     filtered_df = filtered_df.iloc[0:0]
 
-
-# =========================
-# SHOWING COUNT
-# =========================
-
 st.markdown(
     f"""
     <div style="
@@ -663,38 +508,22 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# =========================
-# FILTERED TOTAL
-# =========================
-
-filtered_total = filtered_df["Amount"].sum()
-
-
-st.markdown(
-    f"""
-    <div class="total-box">
-        <div class="total-label">
-            FILTERED TOTAL
-        </div>
-
-        <div class="total-value">
-            ₹ {filtered_total:,.0f}
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
+filtered_total = float(
+    filtered_df["Amount"].sum()
 )
 
+st.subheader(
+    "FILTERED TOTAL"
+)
 
-# =========================
-# SPENDING BY CATEGORY
-# =========================
+st.metric(
+    label="Amount after applying filters",
+    value=f"₹ {filtered_total:,.0f}"
+)
 
 st.subheader(
     "Spending by Category"
 )
-
 
 if not filtered_df.empty:
 
@@ -704,11 +533,9 @@ if not filtered_df.empty:
         .sum()
     )
 
-
     fig, ax = plt.subplots(
         figsize=(8, 4)
     )
-
 
     ax.bar(
         category_total.index,
@@ -716,37 +543,29 @@ if not filtered_df.empty:
         color="red"
     )
 
-
     ax.set_xlabel(
         "Category",
         labelpad=8
     )
 
-
     ax.set_ylabel(
         "Amount (₹)"
     )
 
-
     ax.set_title(
         "Expenses by Category"
     )
-
 
     plt.xticks(
         rotation=45,
         ha="right"
     )
 
-
     plt.tight_layout()
-
 
     st.pyplot(fig)
 
-
     plt.close(fig)
-
 
 else:
 
@@ -754,15 +573,9 @@ else:
         "⚠️ No expenses found for the selected filters."
     )
 
-
-# =========================
-# RECENT EXPENSES
-# =========================
-
 st.subheader(
     "Recent Expenses"
 )
-
 
 if not filtered_df.empty:
 
@@ -774,13 +587,11 @@ if not filtered_df.empty:
         )
     )
 
-
     st.dataframe(
         display_df,
         use_container_width=True,
         hide_index=True
     )
-
 
 else:
 

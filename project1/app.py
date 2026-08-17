@@ -21,6 +21,100 @@ st.markdown("""
     min-height: 100vh;
 }
 
+header[data-testid="stHeader"] {
+    background: linear-gradient(
+        90deg,
+        #4a0000,
+        #8b0000
+    ) !important;
+}
+
+div[data-testid="stToolbar"] {
+    background: transparent !important;
+}
+
+div[role="menu"] {
+    background: #4a0000 !important;
+    border: 2px solid #8b0000 !important;
+    border-radius: 10px !important;
+    padding: 8px !important;
+}
+
+div[data-baseweb="popover"] {
+    background: #4a0000 !important;
+    border: 2px solid #8b0000 !important;
+    border-radius: 10px !important;
+}
+
+div[role="menu"] div[role="menuitem"] {
+    background: #5c1111 !important;
+    color: white !important;
+    border-radius: 6px !important;
+}
+
+div[role="menu"] div[role="menuitem"] * {
+    color: white !important;
+}
+
+div[role="menu"] div[role="menuitem"]:hover {
+    background: #7a2020 !important;
+    color: white !important;
+}
+
+div[data-baseweb="menu"] {
+    background: #4a0000 !important;
+}
+
+div[data-baseweb="menu"] li {
+    background: #5c1111 !important;
+    color: white !important;
+}
+
+div[data-baseweb="menu"] li:hover {
+    background: #7a2020 !important;
+    color: white !important;
+}
+
+div[data-testid="stMainMenu"] {
+    background: #4a0000 !important;
+    color: white !important;
+}
+
+div[data-testid="stMainMenu"] * {
+    color: white !important;
+}
+
+div[data-testid="stMainMenu"] button {
+    background: #5c1111 !important;
+    color: white !important;
+    border-radius: 6px !important;
+}
+
+div[data-testid="stMainMenu"] button:hover {
+    background: #7a2020 !important;
+    color: white !important;
+}
+
+header[data-testid="stHeader"] button:hover {
+    background-color: black !important;
+    color: white !important;
+    border-radius: 6px !important;
+}
+
+header[data-testid="stHeader"] button[aria-label*="Menu"]:hover {
+    background-color: black !important;
+    color: white !important;
+}
+
+div[data-testid="stToolbar"] button:hover {
+    background-color: black !important;
+    color: white !important;
+}
+
+header[data-testid="stHeader"] button:hover * {
+    color: white !important;
+}
+
 h1 {
     background: linear-gradient(90deg, #8b0000, #c1121f) !important;
     color: white !important;
@@ -102,12 +196,14 @@ div[data-baseweb="input"] {
     font-size: 20px;
 }
 
-.chart-heading {
-    color: black;
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 20px;
+.filter-box {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #8b0000;
+    margin-bottom: 25px;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -119,6 +215,22 @@ st.markdown(
 csv_path = Path(__file__).parent / "expenses.csv"
 
 df = pd.read_csv(csv_path)
+
+required_columns = ["Date", "Category", "Note", "Amount"]
+
+for column in required_columns:
+    if column not in df.columns:
+        df[column] = ""
+
+df["Date"] = pd.to_datetime(
+    df["Date"],
+    errors="coerce"
+).dt.date
+
+df["Amount"] = pd.to_numeric(
+    df["Amount"],
+    errors="coerce"
+).fillna(0)
 
 st.markdown(
     '<div class="expense-heading">Add Your Expense 👇</div>',
@@ -150,43 +262,153 @@ with col2:
     )
 
 if st.button("ADD EXPENSE"):
-
     if amount <= 0:
-
         st.error("⚠️ Please enter a valid amount.")
-
     elif category.strip() == "":
-
         st.error("⚠️ Please enter a category.")
-
     elif note.strip() == "":
-
         st.error("⚠️ Please enter a note.")
-
     else:
-
         new_expense = {
             "Date": date,
             "Category": category.strip(),
             "Note": note.strip(),
             "Amount": amount
         }
-
         df.loc[len(df)] = new_expense
-
-        df.to_csv(csv_path, index=False)
-
-        st.success("✅ Expense added successfully!")
-
+        df.to_csv(
+            csv_path,
+            index=False
+        )
+        st.success(
+            "✅ Expense added successfully!"
+        )
         st.rerun()
 
-total = df["Amount"].sum()
+st.markdown(
+    '<div class="expense-heading">Filter Expenses 🔎</div>',
+    unsafe_allow_html=True
+)
+
+filter_col1, filter_col2, filter_col3 = st.columns(3)
+
+with filter_col1:
+    categories = (
+        ["All"]
+        + sorted(
+            df["Category"]
+            .dropna()
+            .astype(str)
+            .unique()
+            .tolist()
+        )
+    )
+
+    selected_category = st.selectbox(
+        "Filter by Category",
+        categories
+    )
+
+with filter_col2:
+    if not df.empty:
+        maximum_amount = int(
+            df["Amount"].max()
+        )
+    else:
+        maximum_amount = 0
+    min_amount = st.number_input(
+        "Minimum Amount (₹)",
+        min_value=0,
+        value=0,
+        step=10
+    )
+
+with filter_col3:
+    max_amount = st.number_input(
+        "Maximum Amount (₹)",
+        min_value=0,
+        value=maximum_amount,
+        step=10
+    )
+
+if not df.empty and df["Date"].notna().any():
+    min_date = df["Date"].dropna().min()
+    max_date = df["Date"].dropna().max()
+else:
+    min_date = pd.Timestamp.today().date()
+    max_date = pd.Timestamp.today().date()
+
+date_col1, date_col2 = st.columns(2)
+
+with date_col1:
+    start_date = st.date_input(
+        "From Date",
+        value=min_date
+    )
+
+with date_col2:
+    end_date = st.date_input(
+        "To Date",
+        value=max_date
+    )
+
+filtered_df = df.copy()
+
+if selected_category != "All":
+    filtered_df = filtered_df[
+        filtered_df["Category"].astype(str)
+        == selected_category
+    ]
+
+if min_amount <= max_amount:
+    filtered_df = filtered_df[
+        (filtered_df["Amount"] >= min_amount)
+        &
+        (filtered_df["Amount"] <= max_amount)
+    ]
+else:
+    st.warning(
+        "⚠️ Minimum amount cannot be greater than maximum amount."
+    )
+    filtered_df = filtered_df.iloc[0:0]
+
+if start_date <= end_date:
+    filtered_df = filtered_df[
+        (filtered_df["Date"] >= start_date)
+        &
+        (filtered_df["Date"] <= end_date)
+    ]
+else:
+    st.warning(
+        "⚠️ From Date cannot be after To Date."
+    )
+
+    filtered_df = filtered_df.iloc[0:0]
+
+st.markdown(
+    f"""
+    <div style="
+        color: #4a0000;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    ">
+        Showing {len(filtered_df)} expense(s)
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+total = filtered_df["Amount"].sum()
 
 st.markdown(
     f"""
     <div class="total-box">
         <div class="total-label">TOTAL SPENT</div>
-        <div class="total-value">₹ {total:,.0f}</div>
+        <div class="total-value">
+            ₹ {total:,.0f}
+        </div>
     </div>
     """,
     unsafe_allow_html=True
@@ -194,31 +416,70 @@ st.markdown(
 
 st.subheader("Spending by Category")
 
-category_total = df.groupby("Category")["Amount"].sum()
+if not filtered_df.empty:
+    category_total = (
+        filtered_df
+        .groupby("Category")["Amount"]
+        .sum()
+    )
 
-fig, ax = plt.subplots(figsize=(6, 3))
+    fig, ax = plt.subplots(
+        figsize=(8, 4)
+    )
 
-ax.bar(
-    category_total.index,
-    category_total.values,
-    color="red"
-)
+    ax.bar(
+        category_total.index,
+        category_total.values,
+        color="red"
+    )
 
-ax.set_xlabel(
-    "Category",
-    labelpad=8
-)
+    ax.set_xlabel(
+        "Category",
+        labelpad=8
+    )
 
-ax.set_ylabel("Amount (₹)")
+    ax.set_ylabel(
+        "Amount (₹)"
+    )
 
-plt.tight_layout()
+    ax.set_title(
+        "Expenses by Category"
+    )
 
-st.pyplot(fig)
+    plt.xticks(
+        rotation=45,
+        ha="right"
+    )
+
+    plt.tight_layout()
+
+    st.pyplot(fig)
+
+    plt.close(fig)
+
+else:
+
+    st.warning(
+        "⚠️ No expenses found for the selected filters."
+    )
+
 
 st.subheader("Recent Expenses")
 
-st.dataframe(
-    df,
-    use_container_width=True,
-    hide_index=True
-)
+if not filtered_df.empty:
+    display_df = filtered_df.sort_values(
+        by="Date",
+        ascending=False
+    )
+
+    st.dataframe(
+        display_df,
+        use_container_width=True,
+        hide_index=True
+    )
+
+else:
+
+    st.info(
+        "No expenses available to display."
+    )

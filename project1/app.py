@@ -94,21 +94,34 @@ col1, col2 = st.columns(2)
 
 with col1:
 
+    st.markdown("**Amount (₹)**")
     amount = st.number_input(
-        "Amount (₹)",
+        "Amount",
         min_value=0,
-        step=10
+        step=10,
+        label_visibility="collapsed"
     )
 
-    category = st.text_input("Category")
+    st.markdown("**Category**")
+    category = st.text_input(
+        "Category",
+        label_visibility="collapsed"
+    )
 
 
 with col2:
 
-    date = st.date_input("Date")
+    st.markdown("**Date**")
+    date = st.date_input(
+        "Date",
+        label_visibility="collapsed"
+    )
 
-    note = st.text_input("Note")
-
+    st.markdown("**Note**")
+    note = st.text_input(
+        "Note",
+        label_visibility="collapsed"
+    )
 
 # Add button
 if st.button("ADD EXPENSE"):

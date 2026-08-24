@@ -2,25 +2,16 @@ import pandas as pd
 import requests
 import streamlit as st
 
-
-# =========================
-# API URL
-# =========================
+st.set_page_config(
+    page_title="SkySense",
+    page_icon="🌤️",
+    layout="wide"
+)
 
 WTTR_URL = "https://wttr.in"
 
-
-# =========================
-# CUSTOM CSS
-# =========================
-
 st.markdown("""
 <style>
-
-    /* =========================
-       APP BACKGROUND
-       ========================= */
-
     .stApp {
         background: linear-gradient(
             135deg,
@@ -36,14 +27,28 @@ st.markdown("""
         padding-bottom: 3rem;
     }
 
+    header[data-testid="stHeader"] {
+        background: linear-gradient(
+            90deg,
+            #12355b 0%,
+            #176b9e 100%
+        ) !important;
+    }
 
-    /* =========================
-       MAIN HEADINGS
-       ========================= */
+    header[data-testid="stHeader"] > div {
+        background: transparent !important;
+    }
 
-    h1,
-    h2,
-    h3,
+    header[data-testid="stHeader"] button {
+        color: white !important;
+    }
+
+    header[data-testid="stHeader"] button:hover {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+    }
+
+    h1, h2, h3,
     [data-testid="stMarkdownContainer"] h1,
     [data-testid="stMarkdownContainer"] h2,
     [data-testid="stMarkdownContainer"] h3 {
@@ -53,10 +58,11 @@ st.markdown("""
     }
 
     h1 {
-        font-size: 2.8rem !important;
+        font-size: 2.2rem !important;
         font-weight: 800 !important;
-        letter-spacing: -1px;
+        letter-spacing: -0.5px;
         margin-bottom: 0.5rem !important;
+        margin-top: 15px !important;
     }
 
     h2 {
@@ -70,11 +76,6 @@ st.markdown("""
         font-size: 1.4rem !important;
         font-weight: 700 !important;
     }
-
-
-    /* =========================
-       SIDEBAR
-       ========================= */
 
     section[data-testid="stSidebar"] {
         background: linear-gradient(
@@ -94,11 +95,6 @@ st.markdown("""
         opacity: 1 !important;
     }
 
-
-    /* =========================
-       SIDEBAR INPUT
-       ========================= */
-
     section[data-testid="stSidebar"] input {
         color: #ffffff !important;
         background: rgba(255, 255, 255, 0.15) !important;
@@ -110,11 +106,6 @@ st.markdown("""
         color: rgba(255, 255, 255, 0.75) !important;
     }
 
-
-    /* =========================
-       SIDEBAR SELECTBOX
-       ========================= */
-
     section[data-testid="stSidebar"] div[data-baseweb="select"] {
         background: rgba(255, 255, 255, 0.15) !important;
         border-radius: 10px !important;
@@ -123,11 +114,6 @@ st.markdown("""
     section[data-testid="stSidebar"] div[data-baseweb="select"] * {
         color: white !important;
     }
-
-
-    /* =========================
-       SIDEBAR RADIO
-       ========================= */
 
     section[data-testid="stSidebar"] div[role="radiogroup"] label {
         color: white !important;
@@ -138,51 +124,25 @@ st.markdown("""
         font-weight: 600 !important;
     }
 
-
-    /* =========================
-       WEATHER METRIC CARDS
-       ========================= */
-
     div[data-testid="stMetric"] {
         background: #ffffff !important;
-
         border: 1px solid #d6e8f5 !important;
-
         border-radius: 18px !important;
-
         padding: 20px !important;
-
-        box-shadow:
-            0 6px 18px rgba(18, 53, 91, 0.08) !important;
-
+        box-shadow: 0 6px 18px rgba(18, 53, 91, 0.08) !important;
         transition:
             transform 0.25s ease,
             box-shadow 0.25s ease,
             border-color 0.25s ease !important;
-
         cursor: pointer;
     }
 
-
-    /* =========================
-       CARD HOVER EFFECT
-       ========================= */
-
     div[data-testid="stMetric"]:hover {
         transform: translateY(-8px) scale(1.02) !important;
-
         border-color: #176b9e !important;
-
-        box-shadow:
-            0 16px 35px rgba(23, 107, 158, 0.25) !important;
-
+        box-shadow: 0 16px 35px rgba(23, 107, 158, 0.25) !important;
         background: #ffffff !important;
     }
-
-
-    /* =========================
-       METRIC LABEL
-       ========================= */
 
     div[data-testid="stMetric"] [data-testid="stMetricLabel"],
     div[data-testid="stMetric"] [data-testid="stMetricLabel"] *,
@@ -195,11 +155,6 @@ st.markdown("""
         font-weight: 700 !important;
     }
 
-
-    /* =========================
-       METRIC VALUE
-       ========================= */
-
     div[data-testid="stMetric"] [data-testid="stMetricValue"],
     div[data-testid="stMetric"] [data-testid="stMetricValue"] *,
     div[data-testid="stMetric"] [data-testid="stMetricValue"] div {
@@ -210,22 +165,12 @@ st.markdown("""
         font-weight: 800 !important;
     }
 
-
-    /* =========================
-       LABEL HOVER
-       ========================= */
-
     div[data-testid="stMetric"]:hover
     [data-testid="stMetricLabel"],
     div[data-testid="stMetric"]:hover
     [data-testid="stMetricLabel"] * {
         color: #12355b !important;
     }
-
-
-    /* =========================
-       VALUE HOVER
-       ========================= */
 
     div[data-testid="stMetric"]:hover
     [data-testid="stMetricValue"],
@@ -234,116 +179,59 @@ st.markdown("""
         color: #176b9e !important;
     }
 
-
-    /* =========================
-       CAPTION
-       ========================= */
-
     [data-testid="stCaptionContainer"] {
         color: #55718c !important;
         opacity: 1 !important;
     }
 
-
-    /* =========================
-       CHART CONTAINER
-       ========================= */
-
     div[data-testid="stLineChart"] {
         background: rgba(255, 255, 255, 0.90);
-
         border-radius: 18px;
-
         padding: 8px;
-
         border: 1px solid #dcecf8;
-
-        box-shadow:
-            0 8px 25px rgba(18, 53, 91, 0.08);
+        box-shadow: 0 8px 25px rgba(18, 53, 91, 0.08);
     }
-
-
-    /* =========================
-       DATAFRAME
-       ========================= */
 
     div[data-testid="stDataFrame"] {
         border-radius: 15px;
-
         overflow: hidden;
-
         border: 1px solid #dcecf8;
-
-        box-shadow:
-            0 8px 25px rgba(18, 53, 91, 0.08);
+        box-shadow: 0 8px 25px rgba(18, 53, 91, 0.08);
     }
-
-
-    /* =========================
-       ALERTS
-       ========================= */
 
     div[data-testid="stAlert"] {
         border-radius: 12px !important;
     }
 
-
-    /* =========================
-       BUTTONS
-       ========================= */
-
     .stButton > button {
         border-radius: 10px !important;
-
         border: none !important;
-
         background: #176b9e !important;
-
         color: white !important;
-
         font-weight: 700 !important;
-
         padding: 0.6rem 1.2rem !important;
-
         transition: all 0.2s ease;
     }
 
     .stButton > button:hover {
         background: #12355b !important;
-
         color: white !important;
-
         transform: translateY(-2px);
     }
 
-
-    /* =========================
-       DIVIDER
-       ========================= */
-
     hr {
         border: none !important;
-
         height: 1px !important;
-
         background: #cfe3f2 !important;
-
         margin: 2rem 0 !important;
     }
 
 </style>
 """, unsafe_allow_html=True)
 
-
-# =========================
-# GET WEATHER
-# =========================
-
 @st.cache_data(ttl=600)
 def get_weather(city: str) -> dict:
-
     try:
-
         response = requests.get(
             f"{WTTR_URL}/{city}",
             params={
@@ -391,11 +279,6 @@ def get_weather(city: str) -> dict:
 
     return {}
 
-
-# =========================
-# HOURLY DATA
-# =========================
-
 def hourly_next_24(
     weather_data: dict
 ) -> pd.DataFrame:
@@ -411,18 +294,14 @@ def hourly_next_24(
     )
 
     if obs_time:
-
         current_time = pd.to_datetime(
             obs_time,
             errors="coerce"
         )
-
     else:
-
         current_time = pd.Timestamp.now()
 
     if pd.isna(current_time):
-
         current_time = pd.Timestamp.now()
 
     for day in weather_data.get(
@@ -457,7 +336,6 @@ def hourly_next_24(
             rows.append(
                 {
                     "time": timestamp,
-
                     "temperature_2m": float(
                         hour.get(
                             "tempC",
@@ -472,7 +350,6 @@ def hourly_next_24(
     )
 
     if hourly.empty:
-
         return pd.DataFrame(
             columns=[
                 "temperature_2m"
@@ -491,22 +368,12 @@ def hourly_next_24(
         "time"
     )
 
-
-# =========================
-# 7-DAY FORECAST DATA
-# =========================
-
-# =========================
-# 3-DAY FORECAST DATA
-# =========================
-
 def daily_table(
     weather_data: dict
 ) -> pd.DataFrame:
 
     rows = []
 
-    # Exactly 3 forecast days
     three_days = weather_data.get(
         "weather",
         []
@@ -520,7 +387,6 @@ def daily_table(
             "%a %d %b"
         )
 
-        # Weather condition
         hourly_data = day.get(
             "hourly",
             []
@@ -538,62 +404,47 @@ def daily_table(
             )
 
             if weather_desc:
-
                 condition = weather_desc[0].get(
                     "value",
                     "Not available"
                 )
-
             else:
-
                 condition = "Not available"
-
             humidity = midday.get(
                 "humidity",
                 "N/A"
             )
-
             wind_speed = midday.get(
                 "windspeedKmph",
                 "N/A"
             )
-
             chance_of_rain = midday.get(
                 "chanceofrain",
                 "N/A"
             )
-
         else:
-
             condition = "Not available"
             humidity = "N/A"
             wind_speed = "N/A"
             chance_of_rain = "N/A"
-
         rows.append(
             {
                 "Day": date,
-
                 "Condition": condition,
-
                 "High (°C)": float(
                     day.get(
                         "maxtempC",
                         0
                     )
                 ),
-
                 "Low (°C)": float(
                     day.get(
                         "mintempC",
                         0
                     )
                 ),
-
                 "Rain Chance (%)": chance_of_rain,
-
                 "Humidity (%)": humidity,
-
                 "Wind (km/h)": wind_speed
             }
         )
@@ -602,73 +453,44 @@ def daily_table(
         rows
     )
 
-# =========================
-# TITLE
-# =========================
-
 st.title(
-    "🌤️ Live Weather Dashboard"
+    "🌤️ SkySense — Know Your Sky"
 )
 
-
-# =========================
-# SIDEBAR
-# =========================
-
 with st.sidebar:
-
     st.write(
         "**Location**"
     )
-
     city = st.text_input(
         "City name",
         value="Amritsar",
         key="city_search"
     )
-
     st.caption(
         "You can enter any city in the world."
     )
 
-
-# =========================
-# WEATHER DATA
-# =========================
-
 if not city.strip():
-
     st.warning(
         "Please enter a city name."
     )
-
     st.stop()
-
 
 weather_data = get_weather(
     city.strip()
 )
 
-
 if not (
     weather_data
     and "current_condition" in weather_data
 ):
-
     st.warning(
         "No weather data to show. "
         "Please check the city name."
     )
-
     st.stop()
 
-
-# =========================
-# LOCATION NAME
-# =========================
-
 try:
-
     area = weather_data[
         "nearest_area"
     ][0]
@@ -690,75 +512,50 @@ try:
         f"{region}, "
         f"{country}"
     )
-
 except Exception:
-
     label = city
-
-
-# =========================
-# CURRENT WEATHER
-# =========================
 
 st.subheader(
     f"🌡️ Now in {label}"
 )
 
-
 current = weather_data[
     "current_condition"
 ][0]
 
-
 col1, col2, col3 = st.columns(3)
-
 
 col1.metric(
     "Temperature",
     f"{current.get('temp_C', 'N/A')} °C"
 )
 
-
 col2.metric(
     "Wind Speed",
     f"{current.get('windspeedKmph', 'N/A')} km/h"
 )
-
 
 col3.metric(
     "Humidity",
     f"{current.get('humidity', 'N/A')}%"
 )
 
-
-# =========================
-# EXTRA WEATHER DETAILS
-# =========================
-
 col4, col5, col6 = st.columns(3)
-
 
 col4.metric(
     "Feels Like",
     f"{current.get('FeelsLikeC', 'N/A')} °C"
 )
 
-
 col5.metric(
     "Pressure",
     f"{current.get('pressure', 'N/A')} hPa"
 )
 
-
 col6.metric(
     "Visibility",
     f"{current.get('visibility', 'N/A')} km"
 )
-
-
-# =========================
-# WEATHER CONDITION
-# =========================
 
 weather_description = current.get(
     "weatherDesc",
@@ -766,91 +563,60 @@ weather_description = current.get(
 )
 
 if weather_description:
-
     condition = weather_description[0].get(
         "value",
         "Not available"
     )
-
 else:
-
     condition = "Not available"
-
 
 st.caption(
     f"Condition: {condition}"
 )
 
-
-# =========================
-# NEXT 24 HOURS
-# =========================
-
 st.subheader(
     "📈 Next 24 hours"
 )
-
 
 hourly = hourly_next_24(
     weather_data
 )
 
-
 if not hourly.empty:
-
     st.line_chart(
         hourly,
         y="temperature_2m",
         color="#FF6B5B",
         height=220
     )
-
 else:
-
     st.info(
         "Hourly weather data is not available."
     )
 
-
-# =========================
-# 7-DAY FORECAST
-# =========================
-
 st.subheader(
-    "📅 3-Day forecast"
+    "📅 3-day forecast"
 )
-
 
 forecast = daily_table(
     weather_data
 )
 
-
 if not forecast.empty:
-
     st.dataframe(
         forecast,
         hide_index=True,
         use_container_width=True
     )
-
 else:
-
     st.info(
         "3-day forecast is not available."
     )
 
-
-# =========================
-# 7-DAY TEMPERATURE CHART
-# =========================
-
 if not forecast.empty:
-
     st.subheader(
         "🌡️ 3-day temperature"
     )
-
     st.line_chart(
         forecast.set_index("Day")[
             ["High (°C)", "Low (°C)"]

@@ -55,6 +55,7 @@ Navigate through the folders to check daily tasks and lectures:
 ├── 📝 feedback-form.py                                            # Comprehensive interactive user feedback app
 ├── 📝 calculator.py                                               # interactive calculator for performing basic calculations.
 ├── 📝 to-do-list.py                                               # task management application for managing daily tasks.
+├── 📝 weather-app.py                                              # SkySense weather dashboard
 ├── 📝 Project Playbook.pptx                                       # Overall project scope presentation
 └── 📄 README.md                                                   # Visual project index
 ```
@@ -81,7 +82,14 @@ A simple arithmetic calculator for performing basic mathematical operations.
 ### 📝 To-Do List App (`to-do-list.py`)
 A simple task management application for organizing and tracking daily tasks.
 * **Task Management:** Add, view, update, and delete tasks.
-* **UI Features:** Interactive task input and status management for keeping track of completed and pending tasks. 
+* **UI Features:** Interactive task input and status management for keeping track of completed and pending tasks.
+
+### 🌤️ SkySense — Weather Dashboard (`weather-app.py`)
+A modern and interactive weather dashboard that provides real-time weather information for different locations.
+* **Weather Data:** Current temperature, weather conditions, humidity, wind speed, visibility, and other weather details.
+* **Forecast:** Displays upcoming weather information to help users understand changing weather conditions.
+* **API Integration:** Fetches live weather data using the `wttr.in` weather API.
+* **UI Features:** Clean gradient-based interface, responsive layout, weather indicators, and an intuitive location-based search experience. 
 
 ---
 

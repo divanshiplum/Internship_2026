@@ -1,5 +1,3 @@
-# resume_matcher.py
-
 import re
 import streamlit as st
 from PyPDF2 import PdfReader

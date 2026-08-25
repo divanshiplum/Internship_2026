@@ -1,4 +1,4 @@
-import r
+import re
 import streamlit as st
 from PyPDF2 import PdfReader
 

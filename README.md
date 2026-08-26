@@ -56,6 +56,7 @@ Navigate through the folders to check daily tasks and lectures:
 ├── 📝 calculator.py                                               # interactive calculator for performing basic calculations.
 ├── 📝 to-do-list.py                                               # task management application for managing daily tasks.
 ├── 📝 weather-app.py                                              # SkySense weather dashboard
+├── 📝 smart-note-app.py                                           # TF-IDF based notes summarization app
 ├── 📝 Project Playbook.pptx                                       # Overall project scope presentation
 └── 📄 README.md                                                   # Visual project index
 ```
@@ -90,6 +91,15 @@ A modern and interactive weather dashboard that provides real-time weather infor
 * **Forecast:** Displays upcoming weather information to help users understand changing weather conditions.
 * **API Integration:** Fetches live weather data using the `wttr.in` weather API.
 * **UI Features:** Clean gradient-based interface, responsive layout, weather indicators, and an intuitive location-based search experience. 
+
+### 📝 Smart Notes Summarizer (`smart-note-app.py`)
+A text summarization application that uses TF-IDF to identify important sentences and keywords from notes.
+* **Input:** Upload a .txt file or paste notes directly into the application.
+* **Summarization:** Generates a customizable summary containing 3-10 important sentences.
+* **Keyword Extraction:** Identifies and displays the most important words using TD-IDF scores.
+* **Statistics:** Shows total words, reading time, and total number of sentences. 
+* **Visualization:** Displays word importance through an interactive bar chart.
+* **UI Features:** Pastel-themed interface with file upload, text input, summary controls, metrics, and data visualization.
 
 ---
 

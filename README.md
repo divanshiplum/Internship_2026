@@ -53,8 +53,13 @@ Navigate through the folders to check daily tasks and lectures:
 │   ├── ⚙️ sidebar-demo.py                                         # Collapsible sidebar control panel
 │   └── ⚙️ tabs-demo.py                                            # Tabbed layout navigation demo
 ├── 📝 feedback-form.py                                            # Comprehensive interactive user feedback app
-├── 📝 calculator.py                                               # interactive calculator for performing basic calculations.
-├── 📝 to-do-list.py                                               # task management application for managing daily tasks.
+├── 📝 calculator.py                                               # interactive calculator for performing basic calculations
+├── 📝 to-do-list.py                                               # task management application for managing daily tasks
+├── 📁 project1/
+│   ├── 📝 app.py                                                  # Expense tracker for managing expenses
+│   └── 📝 expenses.csv                                            # Stores expense records for the tracker
+├── 📁 project2/
+│   ├── 📝 resume-matcher-pdf.py                                   # Resume matching app using PDF and job description
 ├── 📝 weather-app.py                                              # SkySense weather dashboard
 ├── 📝 smart-note-app.py                                           # TF-IDF based notes summarization app
 ├── 📝 Project Playbook.pptx                                       # Overall project scope presentation
@@ -84,6 +89,26 @@ A simple arithmetic calculator for performing basic mathematical operations.
 A simple task management application for organizing and tracking daily tasks.
 * **Task Management:** Add, view, update, and delete tasks.
 * **UI Features:** Interactive task input and status management for keeping track of completed and pending tasks.
+
+### 💰 My Expense Tracker (`app.py`)
+An interactive expense management application that helps users record, filter, analyze, and track their daily expenses.
+* **Expense Management:** Add expenses with amount, category, date, and note.
+* **Data Storage:** Stores expense records in `expenses.csv` for persistent data management.
+* **Filtering:** Filter expenses by category, minimum and maximum amount, and date range.
+* **Statistics:** Displays total spending and filtered spending based on selected filters. 
+* **Visualization:** Provides a bar chart showing spending by category.
+* **Validation:** Checks for valid amounts, categories, notes, and filter ranges before processing data.
+* **UI Features:** Responsive Streamlit layout with sidebar expense entry, gradient background, styled buttons, metric cards, and interactive controls.
+
+### 📑 Resume Matcher (`resume-matcher-pdf.py`)
+A resume analysis application that compares a PDF resume with a job description using TF-IDF and cosine similarity.
+* **PDF Resume Upload:** Extracts text from uploading PDF resumes.
+* **Resume Matching:** Uses TF-IDF and cosine similarity to calculate the match score.
+* **Mising Keywords:** Identifies important job-related keywords missing from the resume.
+* **Match Result:** Displays the resume match percentage with match-level indicators. 
+* **Visualization:** Displays the resume match score through an easy-to-understand percentage metric.
+* **Text Analysis:** Cleans and processes resume and job description text for accurate comparison.
+* **UI Features:** Simple and interactive Streamlit interface with file upload, job description input, progress indicators, match results, and expandable resume data.
 
 ### 🌤️ SkySense — Weather Dashboard (`weather-app.py`)
 A modern and interactive weather dashboard that provides real-time weather information for different locations.
